@@ -1,7 +1,33 @@
 import React from 'react';
 
 // One of the uploaded images
-const coupleImageUrl = "/lovable-uploads/ae48c455-446e-447d-b6a5-18483f8c7cf5.png"; 
+
+const galleryImages = [
+  {
+    src: "/lovable-uploads/photo_couple_3.jpeg",
+    alt: "Souvenir au restaurant",
+  },
+  {
+    src: "/lovable-uploads/photo_couple_4.jpeg",
+    alt: "Photo sur le Golden Gate Bridge",
+  },
+  {
+    src: "/lovable-uploads/photo_couple_5.jpeg",
+    alt: "Photo au bord du Grand Canyon",
+  },
+  {
+    src: "/lovable-uploads/photo_couple_6.jpeg",
+    alt: "Vue du bas de Lombard street",
+  },
+  {
+    src: "/lovable-uploads/photo_couple_7.jpeg",
+    alt: "Repos aux studios Warner Bros à LA",
+  },
+  {
+    src: "/lovable-uploads/photo_couple_9.jpeg",
+    alt: "En pleine nature (Ile de la Réunion)",
+  },
+];
 
 const OurStory: React.FC = () => {
   return (
@@ -36,11 +62,10 @@ const OurStory: React.FC = () => {
         </div>
         <div>
           <img 
-            src={coupleImageUrl} 
+            src={"/lovable-uploads/photo_couple_1.jpeg"} 
             alt="Emeline et Nicolas" 
             className="rounded-lg shadow-xl w-full h-auto object-cover max-h-[500px] mx-auto"
           />
-           <p className="text-center text-sm text-muted-foreground mt-2">Emeline, prête pour l'aventure !</p>
         </div>
       </div>
 
@@ -48,10 +73,16 @@ const OurStory: React.FC = () => {
       <div className="mt-16 text-center">
         <h2 className="text-3xl font-serif text-primary mb-8">Quelques souvenirs en images</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {/* Placeholder images */}
-          {[1, 2, 3].map(i => (
-            <div key={i} className="bg-background aspect-square rounded-lg shadow-md flex items-center justify-center">
-              <p className="text-secondary-foreground">Photo {i}</p>
+          {galleryImages.map(image => (
+            <div
+              key={image.src}
+              className="aspect-square overflow-hidden rounded-lg shadow-md"
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="h-full w-full object-cover"
+              />
             </div>
           ))}
         </div>

@@ -33,7 +33,7 @@ const RSVP: React.FC = () => {
   console.log("RSVP v2 ACTIF");
 
   // --------- STATES ----------
-  const [firstName, setFirstName] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<GuestRow[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -132,10 +132,39 @@ const RSVP: React.FC = () => {
     setSelectedGuest(null);
     setFamily([]);
 
+    const cleaned = searchTerm.trim();
+    const sanitized = cleaned.replace(/'/g, "''");
+    const tokens = cleaned
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((token) => token.replace(/'/g, "''"));
+
+    const clauses: string[] = [];
+
+    if (sanitized) {
+      clauses.push(`first_name.ilike.%${sanitized}%`);
+      clauses.push(`last_name.ilike.%${sanitized}%`);
+    }
+
+    if (tokens.length >= 2) {
+      for (let i = 0; i < tokens.length; i += 1) {
+        for (let j = 0; j < tokens.length; j += 1) {
+          if (i === j) continue;
+          clauses.push(`and(first_name.ilike.%${tokens[i]}%,last_name.ilike.%${tokens[j]}%)`);
+        }
+      }
+    }
+
+    if (!clauses.length) {
+      setLoading(false);
+      setErr("Merci de saisir au moins une lettre.");
+      return;
+    }
+
     const { data, error } = await supabase
       .from("guests")
       .select("*")
-      .or(`first_name.ilike.%${firstName}%,last_name.ilike.%${firstName}%`)
+      .or(clauses.join(","))
       .limit(20);
 
     setLoading(false);
@@ -185,8 +214,8 @@ const RSVP: React.FC = () => {
               Prénom ou nom
             </label>
             <input
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-white focus:ring-primary focus:border-primary"
               placeholder="Votre prénom ou nom"
               required

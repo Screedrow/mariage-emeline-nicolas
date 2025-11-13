@@ -38,7 +38,7 @@ const EventItem: React.FC<EventItemProps> = ({ time, title, description, locatio
 const Program: React.FC = () => {
   const events = [
     {
-      time: "14:00",
+      time: "13:30",
       title: "Cérémonie Civile",
       description: "Union à la mairie de Saint-Sulpice-la-Pointe.",
       location: "Mairie de Saint-Sulpice-la-Pointe, Parc Georges Spénale, 4 Av. Vialas, 81370 Saint-Sulpice-la-Pointe",
@@ -70,15 +70,25 @@ const Program: React.FC = () => {
       locationLink: "https://www.google.com/maps/place/Ch%C3%A2teau+de+la+Busquette/@43.8196814,1.5288988,17z/data=!3m1!4b1!4m9!3m8!1s0x12ac2105fef89d2f:0x54076adc0f48b5f2!5m2!4m1!1i2!8m2!3d43.8196776!4d1.5314737!16s%2Fg%2F11kblcf_dz?entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D",
       icon: Utensils,
     },
-    {
+    /*{
       time: " lendemain - 11:00",
       title: "Brunch Convivial",
       description: "Pour ceux qui le souhaitent, prolongeons les festivités autour d'un brunch.",
       location: "Château de la Busquette, 577 Chem. de la Busquette, 31340 La Magdelaine-sur-Tarn",
       locationLink: "https://www.google.com/maps/place/Ch%C3%A2teau+de+la+Busquette/@43.8196814,1.5288988,17z/data=!3m1!4b1!4m9!3m8!1s0x12ac2105fef89d2f:0x54076adc0f48b5f2!5m2!4m1!1i2!8m2!3d43.8196776!4d1.5314737!16s%2Fg%2F11kblcf_dz?entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D",
       icon: Moon, // Using Moon for "next day" / evening before
-    },
+    },*/
   ];
+
+  const [selectedEventIndex, setSelectedEventIndex] = React.useState(() => {
+    const indexWithLocation = events.findIndex((event) => Boolean(event.location));
+    return indexWithLocation === -1 ? 0 : indexWithLocation;
+  });
+
+  const selectedEvent = events[selectedEventIndex];
+  const mapSrc = selectedEvent?.location
+    ? `https://maps.google.com/maps?q=${encodeURIComponent(selectedEvent.location)}&z=15&output=embed`
+    : "https://maps.google.com/maps?q=France&z=5&output=embed";
 
   return (
     <div className="animate-fade-in-up">
@@ -94,24 +104,54 @@ const Program: React.FC = () => {
       </div>
 
       <div className="mt-16 text-center">
-        <h2 className="text-2xl font-serif text-primary mb-4">Intégration Google Maps</h2>
-        <p className="text-foreground/80 mb-4">
-          Cliquez sur les adresses pour voir les lieux sur Google Maps (liens à venir).
-          Pour l'instant, voici un exemple de carte intégrée :
+        <h2 className="text-2xl font-serif text-primary mb-4">Trouver les lieux</h2>
+        <p className="text-foreground/80 mb-6">
+          Choisissez un moment clé pour afficher son emplacement sur la carte.
         </p>
-        <div className="aspect-w-16 aspect-h-9 bg-secondary rounded-lg shadow-md overflow-hidden">
-          {/* Replace with actual Google Maps embed iframe */}
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.991625692566!2d2.292292615674507!3d48.8583700792874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e29641f06e9%3A0x73236bd1c538f988!2sTour%20Eiffel!5e0!3m2!1sfr!2sfr!4v1678886560000!5m2!1sfr!2sfr" 
-            width="100%" 
-            height="100%" 
-            style={{ border:0 }} 
-            allowFullScreen={false} 
-            loading="lazy" 
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Exemple de carte Google Maps"
-          ></iframe>
+        <div className="flex flex-wrap justify-center gap-3 mb-6">
+          {events.map((event, index) => {
+            if (!event.location) {
+              return null;
+            }
+
+            const isSelected = index === selectedEventIndex;
+
+            return (
+              <button
+                key={event.title}
+                type="button"
+                onClick={() => setSelectedEventIndex(index)}
+                className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
+                  isSelected
+                    ? "border-primary bg-primary text-white shadow-md"
+                    : "border-border bg-background/60 text-foreground hover:border-primary hover:text-primary"
+                }`}
+              >
+                {event.title}
+              </button>
+            );
+          })}
         </div>
+
+        {selectedEvent && (
+          <>
+            <p className="text-sm text-foreground/70 mb-4 max-w-xl mx-auto">
+              {selectedEvent.location}
+            </p>
+            <div className="aspect-video bg-secondary rounded-lg shadow-md overflow-hidden">
+              <iframe
+                src={mapSrc}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen={false}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={`Carte Google Maps - ${selectedEvent.title}`}
+              ></iframe>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

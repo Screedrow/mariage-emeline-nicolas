@@ -10,26 +10,14 @@ const Gifts: React.FC = () => {
       <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
         <Gift className="w-16 h-16 text-primary mx-auto mb-6" />
         <p className="text-lg text-foreground/90 mb-4">
-          Votre présence est le plus beau des cadeaux ! 
+          Ce qui nous touche le plus, c’est de vous savoir à nos côtés pour célébrer cette journée.
         </p>
         <p className="text-foreground/80 mb-8">
-          Si vous souhaitez néanmoins nous témoigner votre affection par une attention, 
-          vous pouvez participer à notre voyage de noces ou consulter notre liste de mariage.
+          Pour ceux qui le souhaitent, les mariés mettront à disposition une urne le jour J afin de contribuer à leur voyage de noces et à leurs futurs projets.
+          Merci d'avance pour vos gentilles attentions !
         </p>
-        <div className="space-y-4">
-          <Button size="lg" asChild className="w-full sm:w-auto">
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              Accéder à notre cagnotte Leetchi (Exemple)
-            </a>
-          </Button>
-          <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              Voir notre liste de mariage (Exemple)
-            </a>
-          </Button>
-        </div>
         <p className="mt-8 text-sm text-muted-foreground">
-          Les liens seront activés prochainement. Merci infiniment !
+          Votre présence et vos messages sont ce qui compte le plus pour nous. Merci infiniment !
         </p>
       </div>
     </div>
