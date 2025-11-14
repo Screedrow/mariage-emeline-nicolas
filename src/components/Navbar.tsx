@@ -1,15 +1,13 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Home, BookOpen, CalendarDays, Gift, Camera, Info, Mail } from 'lucide-react';
+import { Menu, X, Home, BookOpen, CalendarDays, Info, Mail } from 'lucide-react';
 
 const NavLinks = [
   { name: 'Accueil', href: '/', icon: Home },
   { name: 'Notre Histoire', href: '/notre-histoire', icon: BookOpen },
   { name: 'Programme', href: '/programme', icon: CalendarDays },
   { name: 'RSVP', href: '/rsvp', icon: Mail }, // Using Mail for RSVP for now
-  { name: 'Cadeaux', href: '/cadeaux', icon: Gift },
-  { name: 'Galerie', href: '/galerie', icon: Camera },
   { name: 'Infos Pratiques', href: '/infos-pratiques', icon: Info },
   { name: 'Contact', href: '/contact', icon: Mail },
 ];

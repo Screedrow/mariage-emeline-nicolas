@@ -1,5 +1,5 @@
 import React from 'react';
-import {ParkingCircle, Shirt, BedDouble, Smartphone } from 'lucide-react';
+import {ParkingCircle, Shirt, BedDouble, Smartphone, Gift, Camera } from 'lucide-react';
 
 interface InfoSectionProps {
   title: string;
@@ -47,12 +47,15 @@ const PracticalInfo: React.FC = () => {
         </InfoSection>
         <InfoSection title="Hébergements" icon={BedDouble}>
           <p className="text-justify">Pour nos invités venant de loin, voici quelques suggestions d'hôtels et chambres d'hôtes à proximité :</p>
-          <ul className="list-disc list-inside ml-4">
-            <li><a className="hover:text-primary transition-colors" href="https://www.airbnb.fr/rooms/1233833156953526425?adults=1&children=0&enable_m3_private_room=true&infants=0&location=La%20Magdelaine-sur-Tarn%2C%20France&pets=0&search_mode=regular_search&check_in=2024-10-04&check_out=2024-10-06&source_impression_id=p3_1727334611_P3UQgsyDJQULXCyg&previous_page_section_name=1001&federated_search_id=7e13ce11-1161-49d0-bd56-6a85ba43881a" target='_blank' rel="noopener noreferrer">Loft pour 8 personnes</a></li>
-            <li><a className="hover:text-primary transition-colors" href="https://www.airbnb.fr/rooms/43876244?adults=1&children=0&enable_m3_private_room=true&infants=0&pets=0&search_mode=regular_search&check_in=2024-11-01&check_out=2024-11-03&source_impression_id=p3_1727334790_P3fW3rGsgGyK3A6R&previous_page_section_name=1000&federated_search_id=bcaa8d7a-5750-4999-b913-4f1fde54e944" target='_blank' rel="noopener noreferrer">Domaine des Jammetous (16 personnes)</a></li>
-            <li>Autres adresses à venir...</li>
-          </ul>
+          <p><a href="https://docs.google.com/document/d/1WyJ3RsI4EzwoUoMc7C8m4Uxt3GWs_eqd8qXSb2eOVKA/edit?usp=sharing" target='_blank' rel="noopener noreferrer" className="text-primary hover:underline">Liste des hébergements</a></p>
           <p className="text-justify">Nous vous conseillons de réserver rapidement.</p>
+        </InfoSection>
+        <InfoSection title="Cadeaux" icon={Gift}>
+          <p className="text-justify">Les mariés ont prévu une urne pour contribuer à leur voyage de noce et aux projets futurs.</p>
+        </InfoSection>
+        <InfoSection title="Photos & Vidéos" icon={Camera}>
+          <p className="text-justify">L'intégralité des photos et vidéos de notre mariage vous seront transmises après le grand jour. 
+          Vous pourrez ainsi revivre tous ces moments précieux et les partager avec vos proches.</p>
         </InfoSection>
       </div>
     </div>

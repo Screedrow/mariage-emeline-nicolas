@@ -1,5 +1,5 @@
 import React from 'react';
-import { CalendarCheck2, Church, MapPin, Utensils, Moon, Wine } from 'lucide-react'; // Example icons
+import { CalendarCheck2, Church, MapPin, Utensils, Moon, Wine, Camera } from 'lucide-react'; // Example icons
 
 interface EventItemProps {
   time: string;
@@ -35,8 +35,7 @@ const EventItem: React.FC<EventItemProps> = ({ time, title, description, locatio
   </div>
 );
 
-const Program: React.FC = () => {
-  const events = [
+const events = [
     {
       time: "13:30",
       title: "Cérémonie Civile",
@@ -53,6 +52,14 @@ const Program: React.FC = () => {
       location: "Église Saint-Sulpice, place de l'église, 81370 Saint-Sulpice-la-Pointe",
       locationLink: "https://www.google.com/maps/place/%C3%89glise+Saint-Sulpice+de+Saint-Sulpice-la-Pointe/@43.7750099,1.6839529,17z/data=!4m14!1m7!3m6!1s0x12ae82a63daa3743:0xb4594e9bf3801470!2s%C3%89glise+Saint-Sulpice+de+Saint-Sulpice-la-Pointe!8m2!3d43.7750061!4d1.6865278!16s%2Fg%2F11bc58nlvv!3m5!1s0x12ae82a63daa3743:0xb4594e9bf3801470!8m2!3d43.7750061!4d1.6865278!16s%2Fg%2F11bc58nlvv?entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D", // Replace with actual Google Maps link
       icon: Church,
+    },
+    {
+      time: "17:00",
+      title: "Séance Photos",
+      description: "Séance photo au Château de la Busquette.",
+      location: "Château de la Busquette, 577 Chem. de la Busquette, 31340 La Magdelaine-sur-Tarn",
+      locationLink: "https://www.google.com/maps/place/Ch%C3%A2teau+de+la+Busquette/@43.8196814,1.5288988,17z/data=!3m1!4b1!4m9!3m8!1s0x12ac2105fef89d2f:0x54076adc0f48b5f2!5m2!4m1!1i2!8m2!3d43.8196776!4d1.5314737!16s%2Fg%2F11kblcf_dz?entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D",
+      icon: Camera,
     },
     {
       time: "18:00",
@@ -78,16 +85,45 @@ const Program: React.FC = () => {
       locationLink: "https://www.google.com/maps/place/Ch%C3%A2teau+de+la+Busquette/@43.8196814,1.5288988,17z/data=!3m1!4b1!4m9!3m8!1s0x12ac2105fef89d2f:0x54076adc0f48b5f2!5m2!4m1!1i2!8m2!3d43.8196776!4d1.5314737!16s%2Fg%2F11kblcf_dz?entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D",
       icon: Moon, // Using Moon for "next day" / evening before
     },*/
-  ];
+];
 
-  const [selectedEventIndex, setSelectedEventIndex] = React.useState(() => {
-    const indexWithLocation = events.findIndex((event) => Boolean(event.location));
-    return indexWithLocation === -1 ? 0 : indexWithLocation;
+const Program: React.FC = () => {
+  // Regrouper les événements par adresse unique
+  const uniqueLocations = React.useMemo(() => {
+    const locationMap = new Map<string, { location: string; locationLink?: string; displayName: string }>();
+    
+    events.forEach((event) => {
+      if (event.location) {
+        // Vérifier si c'est le Château de la Busquette (les 3 derniers événements)
+        if (event.location.includes("Château de la Busquette")) {
+          if (!locationMap.has("domaine")) {
+            locationMap.set("domaine", {
+              location: event.location,
+              locationLink: event.locationLink,
+              displayName: "Domaine"
+            });
+          }
+        } else {
+          // Pour les autres adresses, utiliser le titre de l'événement comme clé
+          locationMap.set(event.location, {
+            location: event.location,
+            locationLink: event.locationLink,
+            displayName: event.title
+          });
+        }
+      }
+    });
+    
+    return Array.from(locationMap.entries());
+  }, []);
+
+  const [selectedLocationKey, setSelectedLocationKey] = React.useState<string>(() => {
+    return uniqueLocations.length > 0 ? uniqueLocations[0][0] : "";
   });
 
-  const selectedEvent = events[selectedEventIndex];
-  const mapSrc = selectedEvent?.location
-    ? `https://maps.google.com/maps?q=${encodeURIComponent(selectedEvent.location)}&z=15&output=embed`
+  const selectedLocation = uniqueLocations.find(([key]) => key === selectedLocationKey)?.[1];
+  const mapSrc = selectedLocation?.location
+    ? `https://maps.google.com/maps?q=${encodeURIComponent(selectedLocation.location)}&z=15&output=embed`
     : "https://maps.google.com/maps?q=France&z=5&output=embed";
 
   return (
@@ -109,34 +145,30 @@ const Program: React.FC = () => {
           Choisissez un moment clé pour afficher son emplacement sur la carte.
         </p>
         <div className="flex flex-wrap justify-center gap-3 mb-6">
-          {events.map((event, index) => {
-            if (!event.location) {
-              return null;
-            }
-
-            const isSelected = index === selectedEventIndex;
+          {uniqueLocations.map(([key, locationData]) => {
+            const isSelected = key === selectedLocationKey;
 
             return (
               <button
-                key={event.title}
+                key={key}
                 type="button"
-                onClick={() => setSelectedEventIndex(index)}
+                onClick={() => setSelectedLocationKey(key)}
                 className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
                   isSelected
                     ? "border-primary bg-primary text-white shadow-md"
                     : "border-border bg-background/60 text-foreground hover:border-primary hover:text-primary"
                 }`}
               >
-                {event.title}
+                {locationData.displayName}
               </button>
             );
           })}
         </div>
 
-        {selectedEvent && (
+        {selectedLocation && (
           <>
             <p className="text-sm text-foreground/70 mb-4 max-w-xl mx-auto">
-              {selectedEvent.location}
+              {selectedLocation.location}
             </p>
             <div className="aspect-video bg-secondary rounded-lg shadow-md overflow-hidden">
               <iframe
@@ -147,7 +179,7 @@ const Program: React.FC = () => {
                 allowFullScreen={false}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title={`Carte Google Maps - ${selectedEvent.title}`}
+                title={`Carte Google Maps - ${selectedLocation.displayName}`}
               ></iframe>
             </div>
           </>
