@@ -56,7 +56,7 @@ const events = [
     {
       time: "17:00",
       title: "Séance Photos",
-      description: "Séance photo au Château de la Busquette.",
+      description: "Séance photos au Château de la Busquette.",
       location: "Château de la Busquette, 577 Chem. de la Busquette, 31340 La Magdelaine-sur-Tarn",
       locationLink: "https://www.google.com/maps/place/Ch%C3%A2teau+de+la+Busquette/@43.8196814,1.5288988,17z/data=!3m1!4b1!4m9!3m8!1s0x12ac2105fef89d2f:0x54076adc0f48b5f2!5m2!4m1!1i2!8m2!3d43.8196776!4d1.5314737!16s%2Fg%2F11kblcf_dz?entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D",
       icon: Camera,
@@ -64,7 +64,7 @@ const events = [
     {
       time: "18:00",
       title: "Vin d'Honneur",
-      description: "Célébrons ensemble avec un verre au Château de la Busquette.",
+      description: "Célébrons ensemble autour d'un verre au Château de la Busquette.",
       location: "Château de la Busquette, 577 Chem. de la Busquette, 31340 La Magdelaine-sur-Tarn",
       locationLink: "https://www.google.com/maps/place/Ch%C3%A2teau+de+la+Busquette/@43.8196814,1.5288988,17z/data=!3m1!4b1!4m9!3m8!1s0x12ac2105fef89d2f:0x54076adc0f48b5f2!5m2!4m1!1i2!8m2!3d43.8196776!4d1.5314737!16s%2Fg%2F11kblcf_dz?entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D",
       icon: Wine,

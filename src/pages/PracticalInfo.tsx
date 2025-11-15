@@ -5,10 +5,11 @@ interface InfoSectionProps {
   title: string;
   icon: React.ElementType;
   children: React.ReactNode;
+  className?: string;
 }
 
-const InfoSection: React.FC<InfoSectionProps> = ({ title, icon: Icon, children }) => (
-  <div className="bg-white p-6 rounded-lg shadow-lg">
+const InfoSection: React.FC<InfoSectionProps> = ({ title, icon: Icon, children, className = "" }) => (
+  <div className={`bg-white p-6 rounded-lg shadow-lg ${className}`}>
     <div className="flex items-center mb-3">
       <Icon className="w-7 h-7 text-primary mr-3" />
       <h2 className="text-2xl font-serif text-foreground">{title}</h2>
@@ -33,10 +34,8 @@ const PracticalInfo: React.FC = () => {
           Les tenues de cérémonie sont vivement conseillées. Évidemment, le blanc est réservé aux stars du jour !
           </p>
         </InfoSection>
-        <InfoSection title="Parking" icon={ParkingCircle}>
-          <p className="text-justify">Un parking sera disponible à proximité du lieu de réception. Suivez la signalétique. 
-            Pour la mairie, veuillez privilégier les parkings publics environnants.
-          </p>
+        <InfoSection title="Cadeaux" icon={Gift}>
+          <p className="text-justify">Nous n'avons pas de liste de mariage : nous collectionnons surtout les souvenirs ! Une urne sera disponible si vous souhaitez contribuer à notre voyage de noces et à  nos projets futurs.</p>
         </InfoSection>
         <InfoSection title="Flash info !" icon={Smartphone}>
           <p className="text-justify" style={{ fontWeight: 'bold' }}>Cérémonies déconnectées</p>
@@ -50,12 +49,9 @@ const PracticalInfo: React.FC = () => {
           <p><a href="https://docs.google.com/document/d/1WyJ3RsI4EzwoUoMc7C8m4Uxt3GWs_eqd8qXSb2eOVKA/edit?usp=sharing" target='_blank' rel="noopener noreferrer" className="text-primary hover:underline">Liste des hébergements</a></p>
           <p className="text-justify">Nous vous conseillons de réserver rapidement.</p>
         </InfoSection>
-        <InfoSection title="Cadeaux" icon={Gift}>
-          <p className="text-justify">Les mariés ont prévu une urne pour contribuer à leur voyage de noce et aux projets futurs.</p>
-        </InfoSection>
-        <InfoSection title="Photos & Vidéos" icon={Camera}>
-          <p className="text-justify">L'intégralité des photos et vidéos de notre mariage vous seront transmises après le grand jour. 
-          Vous pourrez ainsi revivre tous ces moments précieux et les partager avec vos proches.</p>
+        <InfoSection title="Parking" icon={ParkingCircle} className="md:col-span-2">
+          <p className="text-justify">Un parking sera disponible au lieu de réception. Pour les cérémonies, nous vous recommandons de stationner sur le parking public situé en face de la mairie.
+          </p>
         </InfoSection>
       </div>
     </div>

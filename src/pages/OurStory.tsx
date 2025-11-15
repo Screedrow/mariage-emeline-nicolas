@@ -38,7 +38,7 @@ const OurStory: React.FC = () => {
         <div className="space-y-6 text-lg text-foreground/90">
           <p className="text-justify">
           Notre aventure a commencé de la manière la plus moderne qui soit : sur Internet! 
-          Un simple message sur Facebook, un compliment déguisé sous une passion commune. 
+          Un simple message, un compliment déguisé sous une passion commune. 
           Ce fut le début d'une belle complicité, de rires partagés et d'une évidence qui grandissait jour après jour.
           </p>
           <p className="text-justify">

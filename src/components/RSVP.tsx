@@ -211,13 +211,13 @@ const RSVP: React.FC = () => {
         <form onSubmit={handleSearch} className="mb-4 space-y-4">
           <div>
             <label className="block text-sm font-medium text-left text-foreground/80">
-              Prénom ou nom
+              Prénom ou Nom de famille :
             </label>
             <input
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-white focus:ring-primary focus:border-primary"
-              placeholder="Votre prénom ou nom"
+              placeholder="Votre prénom ou votre nom"
               required
             />
           </div>
