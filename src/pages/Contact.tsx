@@ -44,8 +44,8 @@ const Contact: React.FC = () => {
             </div>
             <span className="text-foreground text-left flex-1">
               Témoin - Karine :{' '}
-              <a href="tel:+33651902896" className="text-primary hover:underline">
-                06.51.90.28.96
+              <a href="tel:+33769303220" className="text-primary hover:underline">
+                07.69.30.32.20
               </a>
             </span>
           </div>
